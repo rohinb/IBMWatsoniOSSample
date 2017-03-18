@@ -21,7 +21,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="idN-g0-0W7">
+                            <view opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="idN-g0-0W7">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
@@ -109,11 +109,48 @@
                                     <action selector="startRecordingClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="oUR-D5-RcY"/>
                                 </connections>
                             </button>
+                            <view alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bts-Ea-mEV">
+                                <rect key="frame" x="20" y="172" width="335" height="154"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3ID-ZX-LXu">
+                                        <rect key="frame" x="46" y="77" width="243" height="47"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="0.6588235294117647" green="0.90196078431372551" blue="0.81176470588235294" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
+                                        <state key="normal" title="Done!">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="doneButtonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="FPT-UX-6Ip"/>
+                                            <action selector="startRecordingClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="D0K-y0-hkN"/>
+                                        </connections>
+                                    </button>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="SXO-XP-1Gi">
+                                        <rect key="frame" x="17" y="30" width="300" height="29"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <segments>
+                                            <segment title="Transcription"/>
+                                            <segment title="More Notes"/>
+                                            <segment title="Less Notes"/>
+                                        </segments>
+                                        <color key="tintColor" red="1" green="0.5450980392" blue="0.58039215690000001" alpha="1" colorSpace="calibratedRGB"/>
+                                    </segmentedControl>
+                                </subviews>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="idN-g0-0W7"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
                         <outlet property="containerView" destination="idN-g0-0W7" id="8CW-2a-dg8"/>
+                        <outlet property="noteTypeSegment" destination="SXO-XP-1Gi" id="sUK-O0-Wkj"/>
+                        <outlet property="popupView" destination="bts-Ea-mEV" id="MoC-Px-1g0"/>
                         <outlet property="recordingTableView" destination="FpY-ff-beQ" id="MFD-CF-WWt"/>
                         <outlet property="recordingTextView" destination="SNf-qp-wAk" id="T2T-YH-rDW"/>
                         <outlet property="startRecordingButton" destination="L3p-Ra-rBE" id="XDa-ec-yrr"/>
