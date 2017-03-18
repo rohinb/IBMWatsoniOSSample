@@ -43,8 +43,12 @@ struct SummaryEngine {
 				print(results.categories!)
 				print(results.semanticRoles!)
 				*/
+                var oldSubject: String?
 				for role in results.semanticRoles! {
-					guard let subject = role.subject?.text else {
+                    
+                    //var oldSubject: String
+                    
+					guard var subject = role.subject?.text else {
 						continue
 					}
 					guard let action = role.action?.text else {
@@ -53,7 +57,16 @@ struct SummaryEngine {
 					guard let object = role.object?.text else {
 						continue
 					}
+                    
+
+                    if oldSubject != nil && subject == "it" || subject == "them" {
+                        subject = oldSubject!
+                    }
+                    
+                    oldSubject = subject
+                    
 					let key = getFirstWordsOf(subject, numWords: noteComplexity)
+                    
 					if subjectDict[key] == nil {
 						subjectDict[key] = [String]()
 					}
