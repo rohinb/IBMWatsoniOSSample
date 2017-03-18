@@ -19,6 +19,7 @@ extension ViewController {
             sender.tag = 1
             addBlurView()
             recordingTextView.animateAlpha(1, t: 0.3)
+            writtenButton.animateAlpha(0, t: 0.3)
             sstStart()
         } else if sender.tag == 1 {
             sender.setTitle("Start Recording", for: .normal)
@@ -30,6 +31,13 @@ extension ViewController {
             sender.tag = 0
             removeBlurView()
             textViewSpeakingMode()
+            notesTableView.animateAlpha(0, t: 0.3)
+            writtenButton.animateAlpha(1, t: 0.3)
+            view.bringSubview(toFront: recordingTableView)
+        } else if sender.tag == 3 {
+            sender.setTitle("Done!", for: .normal)
+            sender.tag = 2
+            popupView.animateAlpha(1, t: 0.3)
         }
         
     }
@@ -83,7 +91,9 @@ extension ViewController {
             startRecordingButton.tag = 2
             startRecordingButton.isEnabled = true
             startRecordingButton.setTitle("Done!", for: .normal)
-            textViewReadingMode()
+            notesTableView.animateAlpha(1, t: 0.3)
+            recordingTextView.animateAlpha(0, t: 0.3)
+
         }
         
     }
@@ -91,25 +101,20 @@ extension ViewController {
     // Create a note
     
     func createNote(type: Int) {
-        SummaryEngine.process(textToAnalyze: recordingTextView.text)
+        SummaryEngine.process(textToAnalyze: recordingTextView.text, noteComplexity: type)
+        
     }
     
-    // delegate function for received result
-    
-    func resultsReceived(infoDict: [String : [String]]) {
-        print(infoDict)
-        // headers are keys (make bold)
-        // bullets are in value of [String]
-        recordingTextView.text = String(describing: infoDict)
-    }
     
     // move textview back to original state
     
     func textViewReadingMode() {
-        recordingTextView.isEditable = false
-        recordingTextView.isSelectable = true
-        recordingTextView.frame.origin.y = 35
-        recordingTextView.isScrollEnabled = true
+        recordingTextView.animateAlpha(0, t: 0.3)
+        notesTableView.animateAlpha(1, t: 0.3)
+//        recordingTextView.isEditable = false
+//        recordingTextView.isSelectable = true
+//        recordingTextView.frame.origin.y = 35
+//        recordingTextView.isScrollEnabled = true
     }
     
     func textViewSpeakingMode() {
@@ -118,6 +123,7 @@ extension ViewController {
         recordingTextView.isScrollEnabled = false
         recordingTextView.frame.origin = originalTextViewPosition
         recordingTextView.animateAlpha(0, t: 0.3)
+        notesTableView.animateAlpha(0, t: 0.3)
     }
     
     

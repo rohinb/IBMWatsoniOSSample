@@ -13,8 +13,8 @@ import NaturalLanguageUnderstandingV1
 struct SummaryEngine {
 	static var delegate : SummaryEngineDelegate?
 	
-	static func process(textToAnalyze: String) {
-		let naturalLanguageUnderstanding = NaturalLanguageUnderstanding(username: "6d022503-94eb-44b0-91b5-52034a59f198", password: "zfZuJsCWq6cd", version: "2016-01-23")
+	static func process(textToAnalyze: String, noteComplexity: Int) {
+		let naturalLanguageUnderstanding = NaturalLanguageUnderstanding(username: "990e5017-b2b2-4e31-9423-1266ef47c6af", password: "ShPBRWuOAWU6", version: "2016-01-23")
 		
 		let concepts = ConceptsOptions(limit: 50, linkedData: true)
 		let emotions = EmotionOptions(document: nil, targets: nil)
@@ -28,9 +28,9 @@ struct SummaryEngine {
 		filteredText = filteredText.replacingOccurrences(of: "the ", with: "")
 		filteredText = filteredText.replacingOccurrences(of: "a ", with: "")
 		filteredText = filteredText.replacingOccurrences(of: "an ", with: "")
-		filteredText = filteredText.replacingOccurrences(of: "%HESITATION", with: "")
+		filteredText = filteredText.replacingOccurrences(of: "%HESITATION", with: ".")
 		var subjectDict = [String: [String]]()
-		var sentences = filteredText.characters.split(separator: ".").map(String.init)
+		//var sentences = filteredText.characters.split(separator: ".").map(String.init)
 		//for (index, sentence) in sentences.enumerated() {
 			let parameters = Parameters(features: features, text: filteredText)
 			//print(sentence)
@@ -43,8 +43,12 @@ struct SummaryEngine {
 				print(results.categories!)
 				print(results.semanticRoles!)
 				*/
+                var oldSubject: String?
 				for role in results.semanticRoles! {
-					guard let subject = role.subject?.text else {
+                    
+                    //var oldSubject: String
+                    
+					guard var subject = role.subject?.text else {
 						continue
 					}
 					guard let action = role.action?.text else {
@@ -53,34 +57,69 @@ struct SummaryEngine {
 					guard let object = role.object?.text else {
 						continue
 					}
-					let key = getFirstWordsOf(subject)
+                    
+
+                    if oldSubject != nil && subject == "it" || subject == "them" {
+                        subject = oldSubject!
+                    }
+                    
+                    oldSubject = subject
+                    
+					let key = getFirstWordsOf(subject, numWords: noteComplexity)
+                    
 					if subjectDict[key] == nil {
 						subjectDict[key] = [String]()
 					}
 
-					subjectDict[key]?.append("- \(getFirstWordsOf(action)) \(getFirstWordsOf(object))")
+					subjectDict[key]?.append("\(getFirstWordsOf(action, numWords: noteComplexity)) \(getFirstWordsOf(object, numWords: noteComplexity))")
 				}
-                
+				for (key, val) in subjectDict {
+					subjectDict[key] = removeSimilarItems(array: val)
+				}
+				var resArray = [(String, Bool)]()
+				for (key, val) in subjectDict {
+					print(key)
+					resArray.append((key, true))
+					for item in val {
+						print(item)
+						resArray.append((item, false))
+					}
+				}
                 DispatchQueue.main.async {
-                    delegate?.resultsReceived(infoDict: subjectDict)
+                    delegate?.resultsReceived(results: resArray)
                 }
-				//if index == sentences.count - 1 {
-//					for (key, val) in subjectDict {
-//						print(key)
-//						for item in val {
-//							print(item)
-//						}
-//					}
-				//}
 			}
 		//}
 		
 	}
 	
+	private static func removeSimilarItems(array: [String]) -> [String] {
+		if array.count > 1 {
+			var res = [String]()
+			for i in 1..<array.count {
+				if array[i].contains(array[i-1]) || array[i-1].contains(array[i]) {
+					if array[i].characters.count > array[i-1].characters.count {
+						res.append(array[i])
+					} else {
+						res.append(array[i-1])
+					}
+				}
+				else {
+					res.append(array[i])
+					if i == 1 {
+						res.append(array[0])
+					}
+				}
+			}
+			return res
+		} else {
+			return array
+		}
+	}
+	
 	//get first three words
-	private static func getFirstWordsOf(_ string: String) -> String {
+	private static func getFirstWordsOf(_ string: String, numWords: Int) -> String {
 		let arr = string.components(separatedBy: " ")
-		let numWords = 8
 		let endIndex = arr.count > numWords ? numWords : arr.count
 		let firstThree = arr[0..<endIndex]
 		return firstThree.joined(separator: " ")
@@ -88,5 +127,5 @@ struct SummaryEngine {
 }
 
 protocol SummaryEngineDelegate {
-	func resultsReceived(infoDict : [String: [String]])
+	func resultsReceived(results : [(String, Bool)])
 }

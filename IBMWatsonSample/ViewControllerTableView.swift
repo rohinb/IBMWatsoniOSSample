@@ -19,18 +19,23 @@ extension ViewController {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell : UITableViewCell
+        var cell = UITableViewCell()
+        
         if tableView == recordingTableView {
             cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! RecordingTableViewCell
             
-            (cell as! RecordingTableViewCell).titleLabel.text = sampleCell[0]
-            (cell as! RecordingTableViewCell).dateLabel.text = sampleCell[1]
-            (cell as! RecordingTableViewCell).lengthLabel.text = sampleCell[2]
+            
+            (cell as! RecordingTableViewCell).titleLabel.text = transcripts[indexPath.row]
+            (cell as! RecordingTableViewCell).dateLabel.text = times[indexPath.row]
+            (cell as! RecordingTableViewCell).lengthLabel.text = chars[indexPath.row]
             
         } else {
-            cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! NotesTableViewCell
-            (cell as! NotesTableViewCell).noteLabel.text = noteArray![indexPath.row].0
-            (cell as! NotesTableViewCell).isHeader = noteArray![indexPath.row].1
+            if notess.count >= 10 {
+                cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! NotesTableViewCell
+                (cell as! NotesTableViewCell).noteLabel.text = noteArray![indexPath.row].0
+                (cell as! NotesTableViewCell).isHeader = noteArray![indexPath.row].1
+                (cell as! NotesTableViewCell).reload()
+            }
         }
         return cell
     }
@@ -40,7 +45,12 @@ extension ViewController {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        if tableView == recordingTableView {
+            //            var notes = notesDefaults.value(forKey: "notes") as! [(String,String,[(String,Bool)],Int)]
+            return 10
+        } else {
+            return (noteArray?.count)!
+        }
     }
     
 }
