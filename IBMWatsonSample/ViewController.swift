@@ -23,6 +23,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     let sampleCell = ["Swift is your god now, obey the true almighty meme lord","Tuesday at 4:30 pm","14:05"]
     
+    let stt = SpeechToText(username: "1842c225-fd2b-4c6a-8c47-5fdbdf99dc78", password: "P45oQOnWySuU")
+    let settings = RecognitionSettings(contentType: .basic)
+    
     var currentText = "" {
         didSet {
             recordingTextView.text = currentText
@@ -40,21 +43,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func sttSetup() {
-        // Hackpassword1!
-        // HackSpeechToText, credential: RohinCredential
-        let stt = SpeechToText(username: "1842c225-fd2b-4c6a-8c47-5fdbdf99dc78", password: "P45oQOnWySuU")
         stt.serviceURL = "https://stream.watsonplatform.net/speech-to-text/api"
-        print(stt)
-        let settings = RecognitionSettings(contentType: .basic)
+    }
+    
+    func sstStart() {
         stt.recognizeMicrophone(settings: settings) { (res) in
             print(res)
             self.currentText = res.bestTranscript
         }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
-            stt.stopRecognizeMicrophone()
-            
-        }
+    }
+    
+    func sstStop() {
+        stt.stopRecognizeMicrophone()
     }
     
     func designSetup() {
