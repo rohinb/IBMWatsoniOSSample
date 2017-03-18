@@ -16,6 +16,12 @@
 		0FE2FF761E7BA834002004AD /* SpeechToTextV1.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FE2FF6A1E7BA3A4002004AD /* SpeechToTextV1.framework */; };
 		0FE2FF771E7BA834002004AD /* AlchemyLanguageV1.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FE2FF681E7BA39A002004AD /* AlchemyLanguageV1.framework */; };
 		0FE2FF791E7BA84D002004AD /* RestKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FE2FF781E7BA84D002004AD /* RestKit.framework */; };
+		0FE2FF7B1E7CAED4002004AD /* NaturalLanguageUnderstandingV1.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FE2FF7A1E7CAED4002004AD /* NaturalLanguageUnderstandingV1.framework */; };
+		0FE2FF7D1E7CE8F3002004AD /* SummaryEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE2FF7C1E7CE8F3002004AD /* SummaryEngine.swift */; };
+		87F9C0001E7D496E003F6EBF /* ViewControllerActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F9BFFF1E7D496E003F6EBF /* ViewControllerActions.swift */; };
+		87F9C0021E7D49D7003F6EBF /* ViewControllerTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F9C0011E7D49D7003F6EBF /* ViewControllerTableView.swift */; };
+		87F9C0041E7D49FE003F6EBF /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F9C0031E7D49FE003F6EBF /* UIViewExtension.swift */; };
+		87F9C0061E7D4A19003F6EBF /* RecordingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F9C0051E7D4A19003F6EBF /* RecordingTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +36,12 @@
 		0FE2FF6A1E7BA3A4002004AD /* SpeechToTextV1.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpeechToTextV1.framework; path = Carthage/Build/iOS/SpeechToTextV1.framework; sourceTree = "<group>"; };
 		0FE2FF6C1E7BA3C6002004AD /* NaturalLanguageClassifierV1.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NaturalLanguageClassifierV1.framework; path = Carthage/Build/iOS/NaturalLanguageClassifierV1.framework; sourceTree = "<group>"; };
 		0FE2FF781E7BA84D002004AD /* RestKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RestKit.framework; path = Carthage/Build/iOS/RestKit.framework; sourceTree = "<group>"; };
+		0FE2FF7A1E7CAED4002004AD /* NaturalLanguageUnderstandingV1.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NaturalLanguageUnderstandingV1.framework; path = Carthage/Build/iOS/NaturalLanguageUnderstandingV1.framework; sourceTree = "<group>"; };
+		0FE2FF7C1E7CE8F3002004AD /* SummaryEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryEngine.swift; sourceTree = "<group>"; };
+		87F9BFFF1E7D496E003F6EBF /* ViewControllerActions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerActions.swift; sourceTree = "<group>"; };
+		87F9C0011E7D49D7003F6EBF /* ViewControllerTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerTableView.swift; sourceTree = "<group>"; };
+		87F9C0031E7D49FE003F6EBF /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
+		87F9C0051E7D4A19003F6EBF /* RecordingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordingTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -40,6 +52,7 @@
 				0FE2FF751E7BA834002004AD /* NaturalLanguageClassifierV1.framework in Frameworks */,
 				0FE2FF791E7BA84D002004AD /* RestKit.framework in Frameworks */,
 				0FE2FF761E7BA834002004AD /* SpeechToTextV1.framework in Frameworks */,
+				0FE2FF7B1E7CAED4002004AD /* NaturalLanguageUnderstandingV1.framework in Frameworks */,
 				0FE2FF771E7BA834002004AD /* AlchemyLanguageV1.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -69,6 +82,11 @@
 			children = (
 				0FE2FF541E7BA03D002004AD /* AppDelegate.swift */,
 				0FE2FF561E7BA03D002004AD /* ViewController.swift */,
+				87F9BFFF1E7D496E003F6EBF /* ViewControllerActions.swift */,
+				87F9C0011E7D49D7003F6EBF /* ViewControllerTableView.swift */,
+				87F9C0051E7D4A19003F6EBF /* RecordingTableViewCell.swift */,
+				87F9C0031E7D49FE003F6EBF /* UIViewExtension.swift */,
+				0FE2FF7C1E7CE8F3002004AD /* SummaryEngine.swift */,
 				0FE2FF581E7BA03D002004AD /* Main.storyboard */,
 				0FE2FF5B1E7BA03D002004AD /* Assets.xcassets */,
 				0FE2FF5D1E7BA03D002004AD /* LaunchScreen.storyboard */,
@@ -80,6 +98,7 @@
 		0FE2FF671E7BA39A002004AD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0FE2FF7A1E7CAED4002004AD /* NaturalLanguageUnderstandingV1.framework */,
 				0FE2FF781E7BA84D002004AD /* RestKit.framework */,
 				0FE2FF6C1E7BA3C6002004AD /* NaturalLanguageClassifierV1.framework */,
 				0FE2FF6A1E7BA3A4002004AD /* SpeechToTextV1.framework */,
@@ -123,6 +142,11 @@
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = 6S335WJ5J9;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -168,6 +192,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/SpeechToTextV1.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/NaturalLanguageClassifierV1.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/RestKit.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/NaturalLanguageUnderstandingV1.framework",
 			);
 			outputPaths = (
 			);
@@ -182,8 +207,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87F9C0041E7D49FE003F6EBF /* UIViewExtension.swift in Sources */,
+				87F9C0021E7D49D7003F6EBF /* ViewControllerTableView.swift in Sources */,
+				87F9C0001E7D496E003F6EBF /* ViewControllerActions.swift in Sources */,
 				0FE2FF571E7BA03D002004AD /* ViewController.swift in Sources */,
+				0FE2FF7D1E7CE8F3002004AD /* SummaryEngine.swift in Sources */,
 				0FE2FF551E7BA03D002004AD /* AppDelegate.swift in Sources */,
+				87F9C0061E7D4A19003F6EBF /* RecordingTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
