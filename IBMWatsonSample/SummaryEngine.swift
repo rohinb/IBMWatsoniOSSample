@@ -11,8 +11,10 @@ import Foundation
 import NaturalLanguageUnderstandingV1
 
 struct SummaryEngine {
+	static var delegate : SummaryEngineDelegate?
+	
 	static func process(textToAnalyze: String) {
-		let naturalLanguageUnderstanding = NaturalLanguageUnderstanding(username: "c74116ac-99d9-4177-a368-436ffa4f7e00", password: "et6zAj7aCoKm", version: "2016-01-23")
+		let naturalLanguageUnderstanding = NaturalLanguageUnderstanding(username: "6d022503-94eb-44b0-91b5-52034a59f198", password: "zfZuJsCWq6cd", version: "2016-01-23")
 		
 		let concepts = ConceptsOptions(limit: 50, linkedData: true)
 		let emotions = EmotionOptions(document: nil, targets: nil)
@@ -27,8 +29,10 @@ struct SummaryEngine {
 		filteredText = filteredText.replacingOccurrences(of: "a ", with: "")
 		filteredText = filteredText.replacingOccurrences(of: "an ", with: "")
 		filteredText = filteredText.replacingOccurrences(of: "%HESITATION", with: "")
-		for sentence in filteredText.characters.split(separator: ".").map(String.init) {
-			let parameters = Parameters(features: features, text: sentence)
+		var subjectDict = [String: [String]]()
+		var sentences = filteredText.characters.split(separator: ".").map(String.init)
+		//for (index, sentence) in sentences.enumerated() {
+			let parameters = Parameters(features: features, text: filteredText)
 			//print(sentence)
 			naturalLanguageUnderstanding.analyzeContent(withParameters: parameters, failure: failure) {
 				results in
@@ -49,20 +53,37 @@ struct SummaryEngine {
 					guard let object = role.object?.text else {
 						continue
 					}
+					let key = getFirstWordsOf(subject)
+					if subjectDict[key] == nil {
+						subjectDict[key] = [String]()
+					}
 
-					print("- \(getFirstWordsOf(subject)) \(getFirstWordsOf(action)) \(getFirstWordsOf(object))")
-					
+					subjectDict[key]?.append("- \(getFirstWordsOf(action)) \(getFirstWordsOf(object))")
 				}
+				delegate?.resultsReceived(infoDict: subjectDict)
+				//if index == sentences.count - 1 {
+//					for (key, val) in subjectDict {
+//						print(key)
+//						for item in val {
+//							print(item)
+//						}
+//					}
+				//}
 			}
-		}
+		//}
+		
 	}
 	
 	//get first three words
 	private static func getFirstWordsOf(_ string: String) -> String {
 		let arr = string.components(separatedBy: " ")
-		let numWords = 5
+		let numWords = 8
 		let endIndex = arr.count > numWords ? numWords : arr.count
 		let firstThree = arr[0..<endIndex]
 		return firstThree.joined(separator: " ")
 	}
+}
+
+protocol SummaryEngineDelegate {
+	func resultsReceived(infoDict : [String: [String]])
 }
