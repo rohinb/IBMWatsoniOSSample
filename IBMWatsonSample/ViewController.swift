@@ -62,8 +62,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         designSetup()
 	}
 	
-	func resultsReceived(infoDict: [String : [String]]) {
-		print(infoDict)
+	func resultsReceived(results: [(String, Bool)]) {
+		print(results)
 		// headers are keys (make bold)
 		// bullets are in value of [String]
 		// TODO: implement UI

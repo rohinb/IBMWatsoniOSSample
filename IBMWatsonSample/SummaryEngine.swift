@@ -76,14 +76,17 @@ struct SummaryEngine {
 				for (key, val) in subjectDict {
 					subjectDict[key] = removeSimilarItems(array: val)
 				}
+				var resArray = [(String, Bool)]()
 				for (key, val) in subjectDict {
 					print(key)
+					resArray.append((key, true))
 					for item in val {
 						print(item)
+						resArray.append((item, false))
 					}
 				}
 				
-				delegate?.resultsReceived(infoDict: subjectDict)
+				delegate?.resultsReceived(results: resArray)
 			}
 		//}
 		
@@ -123,5 +126,5 @@ struct SummaryEngine {
 }
 
 protocol SummaryEngineDelegate {
-	func resultsReceived(infoDict : [String: [String]])
+	func resultsReceived(results : [(String, Bool)])
 }
