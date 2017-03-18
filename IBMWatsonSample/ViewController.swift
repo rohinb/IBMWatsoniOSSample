@@ -32,7 +32,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     var currentText = "" {
         didSet {
-            recordingTextView.text = currentText
+            let UISpecificFilteredText = currentText.replacingOccurrences(of: "%HESITATION", with: "")
+            recordingTextView.text = UISpecificFilteredText
 			self.textViewDidChange()
         }
     }
