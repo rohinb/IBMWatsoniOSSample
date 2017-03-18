@@ -20,3 +20,21 @@ class RecordingTableViewCell: UITableViewCell {
     }
     
 }
+
+
+class NotesTableViewCell: UITableViewCell {
+    
+    @IBOutlet weak var noteLabel: UILabel!
+    var isHeader = false
+    
+    override func awakeFromNib() {
+        if isHeader {
+            noteLabel.font = UIFont(name: "AvenirNext-Medium", size: 19)
+        } else {
+            noteLabel.font = UIFont(name: "AvenirNext-Light", size: 17)
+            let bulletPoint: String = "\u{2022}"
+            noteLabel.text = "  \(bulletPoint) \(noteLabel.text)"
+        }
+    }
+    
+}
