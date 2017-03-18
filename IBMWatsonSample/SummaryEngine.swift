@@ -53,12 +53,12 @@ struct SummaryEngine {
 					guard let object = role.object?.text else {
 						continue
 					}
-					let key = getFirstWordsOf(subject)
+					let key = getFirstWordsOf(subject, numWords: noteComplexity)
 					if subjectDict[key] == nil {
 						subjectDict[key] = [String]()
 					}
 
-					subjectDict[key]?.append("- \(getFirstWordsOf(action)) \(getFirstWordsOf(object))")
+					subjectDict[key]?.append("- \(getFirstWordsOf(action, numWords: noteComplexity)) \(getFirstWordsOf(object, numWords: noteComplexity))")
 				}
 				for (key, val) in subjectDict {
 					subjectDict[key] = removeSimilarItems(array: val)
@@ -101,9 +101,8 @@ struct SummaryEngine {
 	}
 	
 	//get first three words
-	private static func getFirstWordsOf(_ string: String) -> String {
+	private static func getFirstWordsOf(_ string: String, numWords: Int) -> String {
 		let arr = string.components(separatedBy: " ")
-		let numWords = 8
 		let endIndex = arr.count > numWords ? numWords : arr.count
 		let firstThree = arr[0..<endIndex]
 		return firstThree.joined(separator: " ")
