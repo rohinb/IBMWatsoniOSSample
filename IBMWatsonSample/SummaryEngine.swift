@@ -26,6 +26,7 @@ struct SummaryEngine {
 		filteredText = filteredText.replacingOccurrences(of: "the ", with: "")
 		filteredText = filteredText.replacingOccurrences(of: "a ", with: "")
 		filteredText = filteredText.replacingOccurrences(of: "an ", with: "")
+		filteredText = filteredText.replacingOccurrences(of: "%HESITATION", with: "")
 		for sentence in filteredText.characters.split(separator: ".").map(String.init) {
 			let parameters = Parameters(features: features, text: sentence)
 			//print(sentence)

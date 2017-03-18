@@ -25,6 +25,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var currentText = "" {
         didSet {
             recordingTextView.text = currentText
+			self.textViewDidChange()
         }
     }
     
@@ -70,7 +71,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             self.currentText = res.bestTranscript
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 50.0) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
             stt.stopRecognizeMicrophone()
             
         }
@@ -126,8 +127,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         moveTextViewUp()
     }
     
-    func textViewDidChange(_ textView: UITextView) {
-        let lines = numberOfLines(textView: textView)
+    func textViewDidChange() {
+        let lines = numberOfLines(textView: recordingTextView)
         if lines > recordedLines {
             recordedLines = lines
             moveTextViewUp()
