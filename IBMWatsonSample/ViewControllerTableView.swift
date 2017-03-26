@@ -52,5 +52,12 @@ extension ViewController {
             return (noteArray?.count)!
         }
     }
-    
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if tableView == recordingTableView {
+            return 90.0
+        } else {
+            return 45.0
+        }
+    }
 }

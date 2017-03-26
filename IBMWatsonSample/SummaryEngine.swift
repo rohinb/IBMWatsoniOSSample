@@ -14,8 +14,7 @@ struct SummaryEngine {
 	static var delegate : SummaryEngineDelegate?
 	
 	static func process(textToAnalyze: String, noteComplexity: Int) {
-		let naturalLanguageUnderstanding = NaturalLanguageUnderstanding(username: "990e5017-b2b2-4e31-9423-1266ef47c6af", password: "ShPBRWuOAWU6", version: "2016-01-23")
-		
+		let naturalLanguageUnderstanding = NaturalLanguageUnderstanding(username: "73a403ef-8e18-45c2-ae92-70e9c1db7089", password: "OYNOJ0oY8UsV", version: "2016-01-23")
 		let concepts = ConceptsOptions(limit: 50, linkedData: true)
 		let emotions = EmotionOptions(document: nil, targets: nil)
 		let entities = EntitiesOptions(limit: 50, model: nil, disambiguation: nil, sentiment: nil)
@@ -79,11 +78,16 @@ struct SummaryEngine {
 				var resArray = [(String, Bool)]()
 				for (key, val) in subjectDict {
 					print(key)
-					resArray.append((key, true))
-					for item in val {
-						print(item)
-						resArray.append((item, false))
-					}
+                    if val.count > 1 {
+                        resArray.append((key, true))
+                        for item in val {
+                            print(item)
+                            resArray.append((item, false))
+                        }
+                    }
+                    else {
+                        resArray.append(("- \(key) \(val[0])", true))
+                    }
 				}
                 DispatchQueue.main.async {
                     delegate?.resultsReceived(results: resArray)

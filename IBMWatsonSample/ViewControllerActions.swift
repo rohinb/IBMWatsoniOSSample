@@ -18,6 +18,7 @@ extension ViewController {
             sender.setTitle("Stop Recording", for: .normal)
             sender.tag = 1
             addBlurView()
+
             recordingTextView.animateAlpha(1, t: 0.3)
             writtenButton.animateAlpha(0, t: 0.3)
             sstStart()
@@ -33,6 +34,8 @@ extension ViewController {
             textViewSpeakingMode()
             notesTableView.animateAlpha(0, t: 0.3)
             writtenButton.animateAlpha(1, t: 0.3)
+            shareButton.animateAlpha(0, t: 0.3)
+
             view.bringSubview(toFront: recordingTableView)
         } else if sender.tag == 3 {
             sender.setTitle("Done!", for: .normal)
@@ -93,6 +96,7 @@ extension ViewController {
             startRecordingButton.setTitle("Done!", for: .normal)
             notesTableView.animateAlpha(1, t: 0.3)
             recordingTextView.animateAlpha(0, t: 0.3)
+            shareButton.animateAlpha(1, t: 0.3)
 
         }
         

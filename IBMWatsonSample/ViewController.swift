@@ -23,6 +23,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet weak var popupView: UIView!
     @IBOutlet weak var noteTypeSegment: UISegmentedControl!
     
+    @IBOutlet weak var shareButton: UIButton!
     let sampleCell = ["Swift is your god now, obey the true almighty meme lord","Tuesday at 4:30 pm","14:05"]
     
     let stt = SpeechToText(username: "efb3a23d-c1c0-4cac-b4a6-795aa4b1f132", password: "C5WyyhXUrNWC")
@@ -44,7 +45,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var noteArray : [(String,Bool)]? = [("",true)]
     
     @IBOutlet weak var notesTableView: UITableView!
-
+    
     
     
     
@@ -89,37 +90,49 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        		let textToAnalyze = "Any way you slice it, cheese is considered by many to be a favorite food, whether cut into cubes as a snack, grated over pasta, layered in a sandwich or melted as a topping for pizza. Cheese can transform easily from a solid to a gooey liquid and back to a solid again. So it should come as no surprise that cheese is also a candidate for experiments with food and 3D printers. These projects involve squeezing a gel, paste or semiliquid material through a nozzle to shape it into a solid — and edible — object. In a recent study, scientists 3D-printed cheese and conducted a series of tests evaluating its texture, resilience and 'meltability,' to see how this cheese from the future would stack up — on a structural level — against regular processed cheese. The inspiration for the researchers' investigation was a question posed by a cheese manufacturer, who wondered how cheese might be used as a raw material in kitchens that are likely to be equipped with 3D printers in the not-so-distant future, study co-author Alan Kelly, a professor in the School of Food and Nutritional Sciences at University College Cork in Ireland, told Live Science in an email. Kelly was familiar with 3D printing and had studied cheese and dairy projects for 20 years, but this was the first time he'd thought to bring the two together, he said. Processed cheese is produced using techniques that 3D printing mimics very closely —mixing ingredients and molding them into a new shape. And 3D-printing cheese could provide valuable insight for engineers who are still developing materials for 3D printing, which need to be fluid enough to flow through a nozzle but also capable of settling into 'a buildable shape and structure,' Kelly explained."
+        //        		let textToAnalyze = "Any way you slice it, cheese is considered by many to be a favorite food, whether cut into cubes as a snack, grated over pasta, layered in a sandwich or melted as a topping for pizza. Cheese can transform easily from a solid to a gooey liquid and back to a solid again. So it should come as no surprise that cheese is also a candidate for experiments with food and 3D printers. These projects involve squeezing a gel, paste or semiliquid material through a nozzle to shape it into a solid — and edible — object. In a recent study, scientists 3D-printed cheese and conducted a series of tests evaluating its texture, resilience and 'meltability,' to see how this cheese from the future would stack up — on a structural level — against regular processed cheese. The inspiration for the researchers' investigation was a question posed by a cheese manufacturer, who wondered how cheese might be used as a raw material in kitchens that are likely to be equipped with 3D printers in the not-so-distant future, study co-author Alan Kelly, a professor in the School of Food and Nutritional Sciences at University College Cork in Ireland, told Live Science in an email. Kelly was familiar with 3D printing and had studied cheese and dairy projects for 20 years, but this was the first time he'd thought to bring the two together, he said. Processed cheese is produced using techniques that 3D printing mimics very closely —mixing ingredients and molding them into a new shape. And 3D-printing cheese could provide valuable insight for engineers who are still developing materials for 3D printing, which need to be fluid enough to flow through a nozzle but also capable of settling into 'a buildable shape and structure,' Kelly explained."
         
         
         
         SummaryEngine.delegate = self
-
+        
         for i in 0...9 {
             SummaryEngine.process(textToAnalyze: transcripts[i], noteComplexity: 8)
         }
-
+        
         sttSetup()
         designSetup()
-	}
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        
+        //Uncomment the line below if you want the tap not not interfere and cancel other interactions.
+        //tap.cancelsTouchesInView = false
+        
+        view.addGestureRecognizer(tap)
+    }
+    
+    //Calls this function when the tap is recognized.
+    func dismissKeyboard() {
+        //Causes the view (or one of its embedded text fields) to resign the first responder status.
+        view.endEditing(true)
+    }
     
     var counter = 0
-	
+    
     func resultsReceived(results: [(String, Bool)]) {
-
+        
         noteArray = results
-
+        
         notess.append(results)
         counter += 1
         if counter > 10 {
-        notesTableView.reloadData()
+            notesTableView.reloadData()
         }
     }
     
     func sttSetup() {
         
         stt.serviceURL = "https://stream.watsonplatform.net/speech-to-text/api"
-//        print(stt)
+        //        print(stt)
         settings.interimResults = true
         settings.continuous = true
         
@@ -127,7 +140,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func sstStart() {
         stt.recognizeMicrophone(settings: settings) { (res) in
-//            print(res)
+            //            print(res)
             self.currentText = res.bestTranscript
         }
     }
@@ -191,6 +204,20 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return true
     }
     
+    @IBAction func shareClicked(_ sender: Any) {
+        let text = ""
+        
+        // set up activity view controller
+        let textToShare = [ text ]
+        let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
+        activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
+        
+        // exclude some activity types from the list (optional)
+        activityViewController.excludedActivityTypes = [ UIActivityType.airDrop, UIActivityType.postToFacebook ]
+        
+        // present the view controller
+        self.present(activityViewController, animated: true, completion: nil)
+    }
     
 }
 
